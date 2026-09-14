@@ -1,20 +1,17 @@
 # Smart Campus Library Management System
 
-[![Java](https://img.shields.io/badge/Java-SE%208%2B%20%7C%2017%20%7C%2021%20%7C%2026-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
-[![JDBC](https://img.shields.io/badge/Database-SQLite%20via%20JDBC-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://github.com/xerial/sqlite-jdbc)
-[![Multithreading](https://img.shields.io/badge/Concurrency-Multithreading%20%26%20Sync-blueviolet?style=for-the-badge)](https://docs.oracle.com/javase/tutorial/essential/concurrency/)
-[![Tests](https://img.shields.io/badge/Test%20Suite-17%2F17%20Passed-success?style=for-the-badge)](com.library.test.TestRunner)
-[![License](https://img.shields.io/badge/License-Academic%20Use-blue?style=for-the-badge)](#)
+A simple Java-based library management system made to manage books, student records, book issue and return details, and basic reports.
 
-> A modular, console-based desktop application written in pure Java SE that streamlines library circulation, inventory tracking, student membership records, and executive reporting using relational JDBC persistence, multithreaded auditing, and character-oriented streams.
+The project is built using Core Java and uses SQLite with JDBC to store the data. It also includes multithreading, file handling, collections, exception handling, and other Java concepts used in the project.
 
 ---
 
 ## Table of Contents
+
 1. [Project Title](#smart-campus-library-management-system)
 2. [Overview of the Project](#overview-of-the-project)
 3. [Features](#features)
-4. [Technologies & Tools Used](#technologiestools-used)
+4. [Technologies & Tools Used](#technologies--tools-used)
 5. [Steps to Install & Run the Project](#steps-to-install--run-the-project)
 6. [Instructions for Testing](#instructions-for-testing)
 7. [Screenshots](#screenshots)
@@ -25,212 +22,291 @@
 
 ## Overview of the Project
 
-The **Smart Campus Library Management System** provides academic departments and educational institutions with a lightweight, robust, and standalone library circulation and catalog engine. 
+The Smart Campus Library Management System is a console-based Java application designed to make basic library work easier to manage.
 
-### Problem Context
-Academic institutions and departmental libraries frequently struggle with manual record keeping, untracked book loans, misplaced inventory, delayed return notifications, and inconsistent late fine calculations. Existing commercial enterprise library solutions are often heavy, cloud-dependent, and difficult to set up locally.
+Instead of maintaining book records, student details, and issue/return information manually, the system keeps everything organized in a database.
+
+### Problem
+
+Managing a library manually can lead to problems such as:
+
+* Keeping track of which books are available
+* Maintaining student records
+* Tracking issued and returned books
+* Calculating late fines
+* Keeping a record of previous transactions
+* Managing different types of users
 
 ### Solution
-This project delivers a complete desktop solution written in pure Core Java. It demonstrates clean Object-Oriented Architecture (OOP), Data Access Object (DAO) patterns, and ACID-compliant relational persistence via embedded SQLite without requiring heavyweight web containers or external database server installations.
 
-### Target Users & Personas
-- **Chief Administrators (`ADMIN`)**: System-wide configuration, user role provisioning, database auditing, and global report extraction.
-- **Campus Librarians (`LIBRARIAN`)**: Book inventory management, catalog updates, student registration, checking out books, handling returns, and fee assessment.
-- **Enrolled Students (`STUDENT`)**: Inquiring about catalog availability, checking due dates, and tracking personal borrowing histories.
+This project provides a simple desktop-based solution for these tasks.
+
+The application is written in Core Java and uses Object-Oriented Programming concepts. SQLite is used as the database, and JDBC is used to connect the Java application with the database.
+
+The project is completely console-based, so it does not require a web server or any external database server.
+
+### Users
+
+The system has three types of users:
+
+* **Admin:** Has access to all major features, including student management, book management, reports, and thread monitoring.
+* **Librarian:** Can manage books and students and handle book issue and return operations.
+* **Student:** Can view available books and check their borrowing history.
 
 ---
 
 ## Features
 
-### 1. User Authentication & Role-Based Access Control
-- Secure console-based login and user self-registration.
-- Three distinct role levels with tailored permissions: `ADMIN`, `LIBRARIAN`, and `STUDENT`.
-- Session management displaying active username and privileges across all menus.
-- Pre-seeded default credentials for rapid evaluation and testing.
+### 1. Login and User Roles
 
-### 2. Student Records Management
-- Enrolls students with full contact details, academic department (CSE, ECE, MECH, etc.), and year of study.
-- Format-enforced data validation for student emails and phone numbers.
-- Polymorphic search capabilities: search students by unique numeric ID or by department/name keywords.
-- In-place student profile updates.
+* Users can log in through the console.
+* New users can also register.
+* The system has three roles: `ADMIN`, `LIBRARIAN`, and `STUDENT`.
+* Each role has different permissions.
+* The currently logged-in user's name and role are shown in the menus.
+* Some default accounts are already available for testing.
 
-### 3. Book Catalog & Inventory Management
-- Add books categorized by academic discipline via `BookGenre` enums (`COMPUTER_SCIENCE`, `MATHEMATICS`, `PHYSICS`, `FICTION`, etc.).
-- Formatted tabular catalog display showcasing IDs, titles, authors, availability statuses, genres, and ISBNs.
-- Polymorphic search: query books by unique numeric ID or by title/author substrings.
-- Safe deletion validation: prevents accidental removal of books currently checked out to students.
+### 2. Student Management
 
-### 4. Circulation & Atomic Transaction Management
-- **Issue Workflow**: Enforces instant availability checks, creates loan records, and atomically toggles book availability with JDBC transaction rollback protection (`conn.setAutoCommit(false)`).
-- **Return Workflow**: Automatically computes difference between scheduled due date and actual return date.
-- **Overdue Fine Engine**: Overloaded penalty calculation applying standard rates (₹5.00/day) or custom departmental fine rates.
-- **Student History**: Lookup complete active and historical loan records for any registered student.
+The system can be used to:
 
-### 5. Multithreading & Asynchronous Concurrency
-- Background daemon worker thread (`AuditLogThread`) continuously monitors and records transaction events.
-- Thread-safe synchronized message queues prevent race conditions and maintain strict audit trail integrity.
-- Real-time thread diagnostics dashboard displaying thread state, ID, priority, and daemon status.
+* Add new students.
+* Store student details such as name, email, phone number, department, and year of study.
+* Validate email and phone number formats.
+* Search students using their ID, name, or department.
+* Update existing student details.
 
-### 6. Analytics & Character-Oriented File I/O
-- Character-oriented stream file generation (`BufferedWriter` and `PrintWriter`) exporting executive summaries to `library_summary_report.txt`.
-- Stream reading (`BufferedReader` and `FileReader`) parsing and displaying persisted reports directly in the console.
-- **2-D Array Statistics Matrix**: Real-time aggregation of total and available copies categorized by genre.
-- **LIFO Stack Operation Tracking**: Backed by `java.util.Stack` to track and display recent user and system actions in reverse chronological order.
+### 3. Book Management
+
+The book section allows users to:
+
+* Add new books.
+* Assign books to different genres such as Computer Science, Mathematics, Physics, and Fiction.
+* View the complete book list.
+* Check whether a book is available or already issued.
+* Search books using their ID, title, or author.
+* Prevent deletion of a book if it is currently issued.
+
+### 4. Book Issue and Return
+
+The system handles the complete book issue and return process.
+
+When a book is issued:
+
+* The system first checks whether the book is available.
+* A loan record is created.
+* The book's availability is updated.
+* The database transaction is handled using JDBC.
+
+When a book is returned:
+
+* The system checks the due date and return date.
+* If the book is returned late, the fine is calculated automatically.
+* The default fine is ₹5 per day, with support for custom fine rates.
+* Students can also view their previous borrowing records.
+
+### 5. Multithreading
+
+The project also includes a separate thread for keeping track of system activities.
+
+* `AuditLogThread` runs in the background.
+* It records important transaction activities.
+* A synchronized message queue is used so that multiple operations can be handled safely.
+* The application also provides information about the thread, such as its state, ID, priority, and whether it is a daemon thread.
+
+### 6. Reports and File Handling
+
+The system can generate and read library reports using character streams.
+
+* `BufferedWriter` and `PrintWriter` are used to create reports.
+* `BufferedReader` and `FileReader` are used to read reports.
+* Reports are saved in `library_summary_report.txt`.
+* A 2-D array is used to show the number of total and available books for each genre.
+* A `Stack` is used to keep track of recent system and user activities.
 
 ---
 
-## Technologies/Tools Used
+## Technologies & Tools Used
 
-| Category | Technology / Tool | Purpose in Project |
-| :--- | :--- | :--- |
-| **Language** | **Java SE (JDK 8 / 17 / 21 / 26)** | Core language utilizing OOP, Generics, Enums, Collections, and Concurrency |
-| **Database** | **SQLite 3 (`library.db`)** | Embedded, serverless relational database engine requiring zero external configuration |
-| **Data Access** | **Java Database Connectivity (JDBC)** | Parameterized `PreparedStatement`, `Statement`, `ResultSet`, and atomic transactions |
-| **Configuration** | **`db.properties`** | Externalized configuration file decoupling driver class and connection URL from code |
-| **Libraries** | **`sqlite-jdbc-3.45.1.0.jar`** | Pure Java SQLite JDBC driver |
-| **Logging** | **`slf4j-api-1.7.36.jar`**, **`slf4j-simple-1.7.36.jar`** | Standardized logging abstraction layer |
-| **Design Patterns** | **Singleton, DAO, Static Nested Class** | Thread-safe `DatabaseManager`, isolated Data Access Objects, and clean separation of concerns |
-| **Testing** | **Custom Automated Test Suite (`TestRunner`)** | 17 automated verification test cases covering all modules without external test runners |
-| **CLI & Build** | **Standard Java CLI (`javac`, `java`)** | Compile and execute standalone bytecode without heavyweight build tools |
+| Category            | Technology / Tool          | Purpose                                                 |
+| ------------------- | -------------------------- | ------------------------------------------------------- |
+| Language            | Java SE                    | Main programming language used for the project          |
+| Database            | SQLite                     | Stores books, students, users, and transaction records  |
+| Database Connection | JDBC                       | Connects Java with the SQLite database                  |
+| Configuration       | `db.properties`            | Stores database connection settings                     |
+| JDBC Driver         | `sqlite-jdbc-3.45.1.0.jar` | Allows Java to work with SQLite                         |
+| Logging             | SLF4J                      | Used for application logging                            |
+| Design Patterns     | Singleton, DAO             | Helps organize database and application code            |
+| Testing             | `TestRunner`               | Runs automated tests for different parts of the project |
+| Build/Run           | `javac`, `java`            | Used to compile and run the Java application            |
+
+The project uses concepts such as:
+
+* OOP
+* Inheritance
+* Generics
+* Enums
+* Collections
+* Exception handling
+* JDBC
+* Multithreading
+* File handling
+* Interfaces
+* Stack
+* 2-D arrays
 
 ---
 
 ## Steps to Install & Run the Project
 
 ### Prerequisites
-- **Java SE Development Kit (JDK)**: Version 8 or higher installed (tested on Java 17, Java 21, and Java 26).
-  - Verify your installation by opening a terminal and running:
-    ```bash
-    java -version
-    javac -version
-    ```
-- **Operating System**: Windows, Linux, or macOS.
-- **Database Server**: **None required**. SQLite runs embedded using the bundled JARs in `lib/`.
+
+Before running the project, make sure you have:
+
+* Java JDK 8 or above installed.
+* Windows, Linux, or macOS.
+* The required JAR files inside the `lib` folder.
+
+You can check your Java installation using:
+
+```bash
+java -version
+javac -version
+```
+
+No separate database server is required because the project uses SQLite.
 
 ---
 
-### Step 1: Clone or Navigate to the Project Directory
+### Step 1: Open the Project Folder
+
+Clone the repository or open the project folder and navigate to it:
+
 ```bash
-# Clone the repository (or navigate to your local extracted folder)
 cd "Java Library Management System"
 ```
 
 ---
 
-### Step 2: Compile the Java Source Code
-Compile all application packages into the `bin/` directory:
+### Step 2: Compile the Project
 
-**On Windows (PowerShell / Command Prompt):**
+Compile the Java files into the `bin` folder.
+
+**Windows:**
+
 ```powershell
 javac -cp "lib/*;src" -d bin src/com/library/model/*.java src/com/library/exception/*.java src/com/library/dao/*.java src/com/library/service/*.java src/com/library/thread/*.java src/com/library/util/*.java src/com/library/main/*.java src/com/library/test/*.java
 ```
 
-**On Linux / macOS (Bash):**
+**Linux/macOS:**
+
 ```bash
 javac -cp "lib/*:src" -d bin src/com/library/model/*.java src/com/library/exception/*.java src/com/library/dao/*.java src/com/library/service/*.java src/com/library/thread/*.java src/com/library/util/*.java src/com/library/main/*.java src/com/library/test/*.java
 ```
 
 ---
 
-### Step 3: Run the Interactive Console Application
-Launch the menu-driven library system:
+### Step 3: Run the Application
 
-**On Windows:**
+After compiling, start the library management system.
+
+**Windows:**
+
 ```powershell
 java --enable-native-access=ALL-UNNAMED -cp "bin;lib/*" com.library.main.LibraryApp
 ```
 
-**On Linux / macOS:**
+**Linux/macOS:**
+
 ```bash
 java --enable-native-access=ALL-UNNAMED -cp "bin:lib/*" com.library.main.LibraryApp
 ```
 
 ---
 
-### Pre-Configured Demo Credentials
-When prompted at the Authentication Portal, log in with any of the following pre-seeded test accounts:
+## Demo Login Details
 
-| Username | Password | User Full Name | Assigned Role | Permissions |
-| :--- | :--- | :--- | :--- | :--- |
-| `admin` | `admin123` | Chief Administrator | `Administrator` | Full access: Student, Book, Circulation, Reports, and Thread Monitor |
-| `librarian` | `lib123` | Campus Librarian | `Librarian` | Catalog management, student registration, issue & return operations |
-| `student` | `student123` | Enrolled Student | `Student` | Catalog viewing, availability inquiries, and loan history lookup |
+The project already has a few accounts that can be used for testing.
+
+| Username    | Password     | Role      | Access                            |
+| ----------- | ------------ | --------- | --------------------------------- |
+| `admin`     | `admin123`   | Admin     | Full access                       |
+| `librarian` | `lib123`     | Librarian | Books, students, issue and return |
+| `student`   | `student123` | Student   | View books and borrowing history  |
 
 ---
 
 ## Instructions for Testing
 
-The system includes a dedicated automated test suite (`com.library.test.TestRunner`) that validates all functional modules and system requirements in a single command.
+The project includes a separate `TestRunner` class that checks the main features of the system.
 
-### Running the Automated Test Suite
+There are **17 automated tests** covering different parts of the application.
 
-Execute the test suite from the terminal:
+### Running the Tests
 
-**On Windows (PowerShell / Command Prompt):**
+**Windows:**
+
 ```powershell
 java --enable-native-access=ALL-UNNAMED -cp "bin;lib/*" com.library.test.TestRunner
 ```
 
-**On Linux / macOS:**
+**Linux/macOS:**
+
 ```bash
 java --enable-native-access=ALL-UNNAMED -cp "bin:lib/*" com.library.test.TestRunner
 ```
 
-### Automated Test Coverage Checklist
-The test suite runs 17 automated tests and reports individual status for each:
+### Tests Included
 
-1. **[TEST 1] Register Student & Retrieve**: Verifies student insertion and primary key generation.
-2. **[TEST 2] Overloaded Student Search**: Tests department keyword search filter.
-3. **[TEST 3] Update Student Details**: Validates in-place field updates in SQLite.
-4. **[TEST 4] Add Book & Retrieve**: Tests book creation and catalog persistence.
-5. **[TEST 5] Overloaded Book Search**: Verifies title/author keyword search.
-6. **[TEST 6] Book Availability Check**: Confirms availability flag prior to issuance.
-7. **[TEST 7] Issue Book Transaction**: Tests atomic loan creation and availability toggle (`available = false`).
-8. **[TEST 8] Custom Exception Handling**: Confirms `BookNotAvailableException` is triggered when double-issuing.
-9. **[TEST 9] Return Book & Fine Calculation**: Simulates a 4-day overdue return and validates penalty calculation (₹20.00).
-10. **[TEST 10] LIFO Activity Stack**: Verifies `java.util.Stack` pushes and pops recent operations.
-11. **[TEST 11] 2-D Array Statistics Matrix**: Tests genre-wise breakdown matrix computation.
-12. **[TEST 12] Character-Oriented File I/O**: Tests `BufferedWriter`/`PrintWriter` export and `BufferedReader`/`FileReader` report retrieval.
-13. **[TEST 13] Multithreaded Concurrency**: Verifies asynchronous queue consumption and thread liveness in `AuditLogThread`.
-14. **[TEST 14] Authentication (Valid Login)**: Verifies password authentication and role assignment for `admin`.
-15. **[TEST 15] Authentication (Invalid Password)**: Verifies `AuthenticationException` rejection upon incorrect credentials.
-16. **[TEST 16] User Registration**: Tests new user account creation and credential persistence.
-17. **[TEST 17] User Logout & Audit**: Verifies user session termination and audit logging.
+1. Registering and retrieving a student
+2. Searching students
+3. Updating student details
+4. Adding and retrieving a book
+5. Searching books
+6. Checking book availability
+7. Issuing a book
+8. Handling an unavailable book using a custom exception
+9. Returning a book and calculating the fine
+10. Testing the activity stack
+11. Testing the 2-D genre statistics array
+12. Testing character-based file reading and writing
+13. Testing multithreading and the audit log
+14. Testing a valid login
+15. Testing an invalid password
+16. Testing new user registration
+17. Testing logout and audit logging
 
 ---
 
 ## Screenshots
 
-### 1. Automated Verification Test Suite (17/17 Passed)
-Demonstrating the full automated test suite execution verifying all functional and architectural modules:
+### 1. Automated Test Suite
+
+Shows the automated test results with all 17 tests passing.
 
 ![Automated Test Suite](screenshots/01_automated_test_suite.png)
 
----
+### 2. Login and User Roles
 
-### 2. Authentication Portal & Role-Based Login
-Displaying user login as `admin`, credential authentication, role resolution (`Administrator`), and the interactive Main Menu:
+Shows the login screen, user authentication, role detection, and the main menu.
 
 ![Authentication Portal and Login](screenshots/02_auth_portal_login.png)
 
----
+### 3. Book Management
 
-### 3. Book Management & Inventory Catalog
-Displaying the tabular book catalog with polymorphic columns (Item ID, Title, Author, Availability status, Genre, and ISBN):
+Shows the book list with details such as ID, title, author, availability, genre, and ISBN.
 
 ![Book Catalog and Inventory](screenshots/03_book_catalog_inventory.png)
 
----
+### 4. Book Issue and Return
 
-### 4. Circulation: Book Issue & Overdue Fine Return
-Displaying atomic checkout to a student and check-in with automatic 4-day overdue detection and late fee calculation:
+Shows the process of issuing and returning a book, including overdue fine calculation.
 
 ![Circulation Issue and Return](screenshots/04_circulation_issue_return.png)
 
----
+### 5. Reports and File Handling
 
-### 5. Reports, 2-D Genre Matrix & File I/O
-Displaying executive summary report generation via character output streams (`BufferedWriter`/`PrintWriter`), reading back via `BufferedReader`, and the 2D array genre inventory breakdown matrix:
+Shows the generated report, genre-wise book statistics, and character stream file handling.
 
 ![Executive Reports and Analytics](screenshots/05_executive_summary_report.png)
 
@@ -238,149 +314,170 @@ Displaying executive summary report generation via character output streams (`Bu
 
 ## Project Architecture & Database Design
 
-### System Layer Architecture
-```
+The project is divided into different parts so that each part handles a specific responsibility.
+
+### System Architecture
+
+```text
 +-------------------------------------------------------------+
-|                      Presentation Layer                     |
-|                 (com.library.main.LibraryApp)               |
+|                     Presentation Layer                      |
+|                (LibraryApp - Main Program)                  |
 +------------------------------+------------------------------+
                                |
                                v
 +-------------------------------------------------------------+
-|                        Service Layer                        |
-|       (LibraryService implements Manageable<Book>)          |
+|                       Service Layer                         |
+|                    (LibraryService)                         |
 +---------------+-----------------------------+---------------+
                 |                             |
                 v                             v
 +-------------------------------+  +--------------------------+
-|       Multithreading Worker   |  |   Java I/O Reporting     |
-|       (AuditLogThread)        |  |   (ReportGenerator)      |
+|      Multithreading           |  |      Java File I/O       |
+|      (AuditLogThread)         |  |     (ReportGenerator)    |
 +-------------------------------+  +--------------------------+
                 |
                 v
 +-------------------------------------------------------------+
-|                     Data Access Layer (DAO)                 |
-|       (StudentDAO, BookDAO, TransactionDAO, DatabaseManager)|
+|                     Data Access Layer                       |
+|       StudentDAO, BookDAO, TransactionDAO, DatabaseManager |
 +------------------------------+------------------------------+
                                |
                                v
 +-------------------------------------------------------------+
-|                 Relational Database Storage                 |
-|                  (SQLite: library.db via JDBC)              |
+|                    SQLite Database                           |
+|                     (library.db)                            |
 +-------------------------------------------------------------+
 ```
 
-### Relational Database Schema (ER Diagram)
-```mermaid
-erDiagram
-    STUDENT ||--o{ TRANSACTION : borrows
-    BOOK ||--o{ TRANSACTION : "included in"
+### Database Structure
 
-    STUDENT {
-        int id PK
-        string name
-        string email
-        string phone
-        string department
-        int year_of_study
-    }
+The database contains four main tables:
 
-    BOOK {
-        int item_id PK
-        string title
-        string author
-        int available
-        string isbn
-        string genre
-        int edition
-    }
+* **STUDENT** – stores student information.
+* **BOOK** – stores book details and availability.
+* **TRANSACTION** – stores issue and return records.
+* **USER** – stores login and role information.
 
-    TRANSACTION {
-        int transaction_id PK
-        int student_id FK
-        int book_id FK
-        string issue_date
-        string due_date
-        string return_date
-        real fine_amount
-        string status
-    }
+```text
+STUDENT
+- id
+- name
+- email
+- phone
+- department
+- year_of_study
 
-    USER {
-        int id PK
-        string username
-        string password
-        string full_name
-        string role
-    }
+BOOK
+- item_id
+- title
+- author
+- available
+- isbn
+- genre
+- edition
+
+TRANSACTION
+- transaction_id
+- student_id
+- book_id
+- issue_date
+- due_date
+- return_date
+- fine_amount
+- status
+
+USER
+- id
+- username
+- password
+- full_name
+- role
 ```
+
+A student can have multiple transaction records, and each transaction is connected to a book.
 
 ---
 
 ## Project Directory Structure
 
-```
+```text
 Java Library Management System/
-├── bin/                                # Compiled .class bytecode
-├── lib/                                # Standalone JDBC driver & logging JARs
-│   ├── sqlite-jdbc-3.45.1.0.jar        # SQLite JDBC Driver
-│   ├── slf4j-api-1.7.36.jar            # SLF4J API
-│   └── slf4j-simple-1.7.36.jar         # Simple logger implementation
-├── screenshots/                        # High-resolution terminal output screenshots
-│   ├── 01_automated_test_suite.png     # Automated test suite run
-│   ├── 02_auth_portal_login.png        # Authentication & login flow
-│   ├── 03_book_catalog_inventory.png   # Book catalog table display
-│   ├── 04_circulation_issue_return.png # Issue & overdue return workflow
-│   └── 05_executive_summary_report.png # Summary report & 2-D genre matrix
-├── scripts/                            # Utility and helper scripts
-│   └── generate_screenshots.py         # Terminal screenshot generator
-├── src/                                # Java source code
+
+├── bin/
+│   └── Compiled Java files
+│
+├── lib/
+│   ├── sqlite-jdbc-3.45.1.0.jar
+│   ├── slf4j-api-1.7.36.jar
+│   └── slf4j-simple-1.7.36.jar
+│
+├── screenshots/
+│   ├── 01_automated_test_suite.png
+│   ├── 02_auth_portal_login.png
+│   ├── 03_book_catalog_inventory.png
+│   ├── 04_circulation_issue_return.png
+│   └── 05_executive_summary_report.png
+│
+├── scripts/
+│   └── generate_screenshots.py
+│
+├── src/
 │   └── com/
 │       └── library/
-│           ├── model/                  # Domain entity models
-│           │   ├── Person.java         # Abstract base person class
-│           │   ├── Student.java        # Inherits Person
-│           │   ├── LibraryItem.java    # Abstract base catalog item
-│           │   ├── Book.java           # Inherits LibraryItem
-│           │   ├── Transaction.java    # Circulation record model
-│           │   ├── User.java           # Authentication credential model
-│           │   ├── BookGenre.java      # Enum with names and codes
-│           │   ├── TransactionStatus.java # Status enum (ISSUED, RETURNED, OVERDUE)
-│           │   └── UserRole.java       # Role enum (ADMIN, LIBRARIAN, STUDENT)
-│           ├── dao/                    # Data Access Objects (JDBC)
-│           │   ├── DatabaseManager.java# Thread-safe Singleton connection & DDL manager
-│           │   ├── StudentDAO.java     # Student CRUD operations
-│           │   ├── BookDAO.java        # Book catalog CRUD operations
-│           │   ├── TransactionDAO.java # Circulation transactions & history
-│           │   └── UserDAO.java        # User authentication & credentials
-│           ├── service/                # Core business logic
-│           │   ├── Manageable.java     # Generic interface for entities
-│           │   └── LibraryService.java # Business rules, fines, stack tracking
-│           ├── thread/                 # Multithreading & Synchronization
-│           │   └── AuditLogThread.java # Daemon worker thread for audit events
-│           ├── exception/              # Custom checked exception hierarchy
+│           │
+│           ├── model/
+│           │   ├── Person.java
+│           │   ├── Student.java
+│           │   ├── LibraryItem.java
+│           │   ├── Book.java
+│           │   ├── Transaction.java
+│           │   ├── User.java
+│           │   ├── BookGenre.java
+│           │   ├── TransactionStatus.java
+│           │   └── UserRole.java
+│           │
+│           ├── dao/
+│           │   ├── DatabaseManager.java
+│           │   ├── StudentDAO.java
+│           │   ├── BookDAO.java
+│           │   ├── TransactionDAO.java
+│           │   └── UserDAO.java
+│           │
+│           ├── service/
+│           │   ├── Manageable.java
+│           │   └── LibraryService.java
+│           │
+│           ├── thread/
+│           │   └── AuditLogThread.java
+│           │
+│           ├── exception/
 │           │   ├── LibraryException.java
 │           │   ├── AuthenticationException.java
 │           │   ├── BookNotAvailableException.java
 │           │   └── RecordNotFoundException.java
-│           ├── util/                   # Utility helpers
-│           │   ├── InputValidator.java # Console input parser and regex validator
-│           │   └── ReportGenerator.java# Character streams (BufferedReader / PrintWriter)
+│           │
+│           ├── util/
+│           │   ├── InputValidator.java
+│           │   └── ReportGenerator.java
+│           │
 │           ├── main/
-│           │   └── LibraryApp.java     # Interactive CLI main application
+│           │   └── LibraryApp.java
+│           │
 │           └── test/
-│               └── TestRunner.java     # Automated verification suite (17 tests)
-├── db.properties                       # Externalized JDBC configuration
-├── library.db                          # SQLite persistent database file
-├── library_summary_report.txt          # Exported character stream summary report
-├── statement.md                        # Project requirements & specifications
-└── README.md                           # Main comprehensive project documentation
+│               └── TestRunner.java
+│
+├── db.properties
+├── library.db
+├── library_summary_report.txt
+├── statement.md
+└── README.md
 ```
 
 ---
 
 ## References
+
 1. Herbert Schildt, *Java: The Complete Reference*, 11th Edition, Oracle Press / McGraw-Hill.
 2. Cay S. Horstmann, *Core Java Volume I – Fundamentals*, 11th Edition, Pearson.
-3. Oracle Java SE Official Documentation: [https://docs.oracle.com/en/java/javase/](https://docs.oracle.com/en/java/javase/)
-4. SQLite JDBC Driver Repository: [https://github.com/xerial/sqlite-jdbc](https://github.com/xerial/sqlite-jdbc)
+3. Oracle Java SE Documentation.
+4. SQLite JDBC Driver Repository.
