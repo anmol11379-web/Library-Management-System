@@ -1,0 +1,11 @@
+target/
+bin/
+*.db
+.env
+.idea/
+*.class
+*.log
+library_summary_report.txt
+test_summary_report.txt
+reports/*.csv
+
