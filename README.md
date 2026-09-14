@@ -309,43 +309,6 @@ Shows the generated report, genre-wise book statistics, and character stream fil
 
 ---
 
-## Project Architecture & Database Design
-
-The project is divided into different parts so that each part handles a specific responsibility.
-
-### System Architecture
-
-```text
-+-------------------------------------------------------------+
-|                     Presentation Layer                      |
-|                (LibraryApp - Main Program)                  |
-+------------------------------+------------------------------+
-                               |
-                               v
-+-------------------------------------------------------------+
-|                       Service Layer                         |
-|                    (LibraryService)                         |
-+---------------+-----------------------------+---------------+
-                |                             |
-                v                             v
-+-------------------------------+  +--------------------------+
-|      Multithreading           |  |      Java File I/O       |
-|      (AuditLogThread)         |  |     (ReportGenerator)    |
-+-------------------------------+  +--------------------------+
-                |
-                v
-+-------------------------------------------------------------+
-|                     Data Access Layer                       |
-|       StudentDAO, BookDAO, TransactionDAO, DatabaseManager |
-+------------------------------+------------------------------+
-                               |
-                               v
-+-------------------------------------------------------------+
-|                    SQLite Database                           |
-|                     (library.db)                            |
-+-------------------------------------------------------------+
-```
-
 ### Database Structure
 
 The database contains four main tables:
