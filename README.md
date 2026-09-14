@@ -280,31 +280,25 @@ java --enable-native-access=ALL-UNNAMED -cp "bin:lib/*" com.library.test.TestRun
 
 ## Screenshots
 
-### 1. Automated Test Suite
-
-Shows the automated test results with all 17 tests passing.
-
-![Automated Test Suite](screenshots/01_automated_test_suite.png)
-
-### 2. Login and User Roles
+### 1. Login and User Roles
 
 Shows the login screen, user authentication, role detection, and the main menu.
 
 ![Authentication Portal and Login](screenshots/02_auth_portal_login.png)
 
-### 3. Book Management
+### 2. Book Management
 
 Shows the book list with details such as ID, title, author, availability, genre, and ISBN.
 
 ![Book Catalog and Inventory](screenshots/03_book_catalog_inventory.png)
 
-### 4. Book Issue and Return
+### 3. Book Issue and Return
 
 Shows the process of issuing and returning a book, including overdue fine calculation.
 
 ![Circulation Issue and Return](screenshots/04_circulation_issue_return.png)
 
-### 5. Reports and File Handling
+### 4. Reports and File Handling
 
 Shows the generated report, genre-wise book statistics, and character stream file handling.
 
