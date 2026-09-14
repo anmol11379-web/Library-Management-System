@@ -1,4 +1,4 @@
-# Smart Campus Library Management System
+# Library Management System
 
 A simple Java-based library management system made to manage books, student records, book issue and return details, and basic reports.
 
