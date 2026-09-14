@@ -290,25 +290,28 @@ Shows the automated test results with all 17 tests passing.
 
 Shows the login screen, user authentication, role detection, and the main menu.
 
-![Authentication Portal and Login](screenshots/02_auth_portal_login.png)
+<img width="900" height="808" alt="image" src="https://github.com/user-attachments/assets/58d15c98-8777-4327-9137-386bf04beab7" />
 
 ### 3. Book Management
 
 Shows the book list with details such as ID, title, author, availability, genre, and ISBN.
 
-![Book Catalog and Inventory](screenshots/03_book_catalog_inventory.png)
+<img width="1065" height="647" alt="image" src="https://github.com/user-attachments/assets/bbac9f6c-d118-4769-b52e-56053237cb68" />
+
 
 ### 4. Book Issue and Return
 
 Shows the process of issuing and returning a book, including overdue fine calculation.
 
-![Circulation Issue and Return](screenshots/04_circulation_issue_return.png)
+<img width="900" height="831" alt="image" src="https://github.com/user-attachments/assets/970736f5-c27f-446e-9e36-a7c1cc837a3d" />
+
 
 ### 5. Reports and File Handling
 
 Shows the generated report, genre-wise book statistics, and character stream file handling.
 
-![Executive Reports and Analytics](screenshots/05_executive_summary_report.png)
+<img width="900" height="762" alt="image" src="https://github.com/user-attachments/assets/d110b7c2-25a1-44fe-ae56-0da364baf8e4" />
+
 
 ---
 
