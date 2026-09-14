@@ -15,8 +15,7 @@ The project is built using Core Java and uses SQLite with JDBC to store the data
 5. [Steps to Install & Run the Project](#steps-to-install--run-the-project)
 6. [Instructions for Testing](#instructions-for-testing)
 7. [Screenshots](#screenshots)
-8. [Project Architecture & Database Design](#project-architecture--database-design)
-9. [Project Directory Structure](#project-directory-structure)
+8. [Project Directory Structure](#project-directory-structure)
 
 ---
 
